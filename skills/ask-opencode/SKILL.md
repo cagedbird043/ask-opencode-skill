@@ -34,6 +34,8 @@ Default behavior is ephemeral: after extracting output, the wrapper deletes the 
 
 Only pass `--keep-session` when the user explicitly wants the OpenCode conversation to remain visible in OpenCode history.
 
+On Ctrl-C or timeout, the wrapper terminates the OpenCode child process group and still attempts session cleanup from partial JSON output or the generated unique title.
+
 ## Model selection
 
 The wrapper supports explicit OpenCode model selection:
@@ -96,3 +98,4 @@ Default: no explicit OpenCode agent; passes `--dangerously-skip-permissions` so 
 - After edit mode, Codex must inspect `git diff` and run the relevant verification itself before claiming completion.
 - If OpenCode output is empty, rerun with `--raw-json` only for debugging.
 - Do not pass `--keep-session` for subagent-style one-shot calls unless the user asks to preserve OpenCode history.
+- On Ctrl-C/timeout, expect exit code 130/124 and no persistent OpenCode session when cleanup succeeds.
