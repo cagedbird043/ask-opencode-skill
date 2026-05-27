@@ -1,12 +1,12 @@
 ---
 name: ask-opencode
 license: MIT
-description: Delegate a bounded task from Codex to local OpenCode via `opencode run`, especially for independent code review, repo exploration, architecture critique, or a scoped edit when using OpenCode as a second agent. Use when the user says ask opencode, call opencode, use opencode as subagent, or wants Codex to make OpenCode help.
+description: Delegate a bounded task from an AI agent session to local OpenCode via `opencode run`, especially for independent code review, repo exploration, architecture critique, or a scoped edit when using OpenCode as a second agent. Use when the user says ask opencode, call opencode, use opencode as subagent, or wants OpenCode to help.
 ---
 
 # ask-opencode
 
-Use this skill to have Codex call local OpenCode as an external helper process.
+Use this skill to call local OpenCode as an external helper process from an AI agent session.
 
 ## Default rule
 
@@ -14,10 +14,11 @@ Prefer read-only delegation unless the user explicitly wants OpenCode to edit fi
 
 ## Command
 
-Run the bundled wrapper from this skill directory:
+Run the bundled wrapper by resolving the script path relative to this `SKILL.md`; do not assume `$HOME` or any fixed install root:
 
 ```bash
-python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" [options] -- "prompt"
+skill_dir="<directory containing this SKILL.md>"
+python3 "$skill_dir/scripts/ask_opencode.py" [options] -- "prompt"
 ```
 
 The wrapper calls:
@@ -38,10 +39,10 @@ On Ctrl-C or timeout, the wrapper terminates the OpenCode child process group an
 
 ## Model selection
 
-The wrapper supports explicit OpenCode model selection:
+In examples below, `skill_dir` means the directory containing this `SKILL.md`. The wrapper supports explicit OpenCode model selection:
 
 ```bash
-python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
+python3 "$skill_dir/scripts/ask_opencode.py" \
   --model deepseek/deepseek-v4-flash \
   -- "<prompt>"
 ```
@@ -60,7 +61,7 @@ If the user names a model, always pass `--model <provider/model>`.
 Use this for independent opinions, code review, root-cause guesses, repo mapping, and plan critique:
 
 ```bash
-python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
+python3 "$skill_dir/scripts/ask_opencode.py" \
   --mode readonly \
   --model deepseek/deepseek-v4-flash \
   --dir "$PWD" \
@@ -74,7 +75,7 @@ Default: no explicit OpenCode agent. The wrapper passes `--dangerously-skip-perm
 Use only when the user explicitly allows OpenCode to modify files. Keep scope narrow:
 
 ```bash
-python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
+python3 "$skill_dir/scripts/ask_opencode.py" \
   --mode edit \
   --model deepseek/deepseek-v4-flash \
   --dir "$PWD" \
