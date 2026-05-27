@@ -17,7 +17,7 @@ Prefer read-only delegation unless the user explicitly wants OpenCode to edit fi
 Run the bundled wrapper from this skill directory:
 
 ```bash
-python3 /home/cagedbird/.codex/skills/ask-opencode/scripts/ask_opencode.py [options] -- "prompt"
+python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" [options] -- "prompt"
 ```
 
 The wrapper calls:
@@ -41,7 +41,7 @@ On Ctrl-C or timeout, the wrapper terminates the OpenCode child process group an
 The wrapper supports explicit OpenCode model selection:
 
 ```bash
-python3 /home/cagedbird/.codex/skills/ask-opencode/scripts/ask_opencode.py \
+python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
   --model deepseek/deepseek-v4-flash \
   -- "<prompt>"
 ```
@@ -60,7 +60,7 @@ If the user names a model, always pass `--model <provider/model>`.
 Use this for independent opinions, code review, root-cause guesses, repo mapping, and plan critique:
 
 ```bash
-python3 /home/cagedbird/.codex/skills/ask-opencode/scripts/ask_opencode.py \
+python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
   --mode readonly \
   --model deepseek/deepseek-v4-flash \
   --dir "$PWD" \
@@ -74,7 +74,7 @@ Default: no explicit OpenCode agent. The wrapper passes `--dangerously-skip-perm
 Use only when the user explicitly allows OpenCode to modify files. Keep scope narrow:
 
 ```bash
-python3 /home/cagedbird/.codex/skills/ask-opencode/scripts/ask_opencode.py \
+python3 "$HOME/.codex/skills/ask-opencode/scripts/ask_opencode.py" \
   --mode edit \
   --model deepseek/deepseek-v4-flash \
   --dir "$PWD" \
